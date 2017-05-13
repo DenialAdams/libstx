@@ -6,9 +6,7 @@ Before installing, the file named "config.mk" should be edited to fit the
 requirements of your system. Once the configuration file is all set, installing
 libstx is as simple as running the following command with root privileges:
 
-`
-make install
-`
+`make install`
 
 After this is run, the library can be linked to other C code when compiling with
 the "-lstx" flag e.g.
@@ -17,7 +15,7 @@ the "-lstx" flag e.g.
 
 ## Examples
 #### #1. Printing hello world with extra steps
-`
+```
 #include <libstx.h>
 
 int
@@ -33,7 +31,7 @@ main(int argc, char **argv)
 
 	printf("%.*s\n", sp.len, sp.mem);
 }
-`
+```
 
 ## Implementation
 libstx implements two basic data structures, the stx and the spx. The spx
