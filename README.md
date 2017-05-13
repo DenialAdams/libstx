@@ -11,7 +11,7 @@ libstx is as simple as running the following command with root privileges:
 After this is run, the library can be linked to other C code when compiling with
 the "-lstx" flag e.g.
 
-`cc -o myfoo myfoo.c -lstx`
+`cc -o myfoomyfoo.c -lstx`
 
 ## Examples
 #### #1. Printing hello world with extra steps
@@ -42,7 +42,7 @@ the spx structure contains only a pointer of a string and it's length.
 ## Why use libstx
 libstx is a fairly standard string implementation when compared to most other C
 string libraries, however there are a few special properties it was created with
-in mind that seperates it from the rest.
+in mind that separates it from the rest.
 
 #### #0. Memory and allocation
 Memory management is completely manual. For example, before appending to a stx,
@@ -56,11 +56,11 @@ wrong time. Also, since reallocations can be more directly controlled,
 the lifetimes of references to a stx can be more tightly controlled.
 
 However this is a disadvantage as it makes buffer overruns easier to
-accidently implement, and as usual manual memory management is just as manual as
+accidentally implement, and as usual manual memory management is just as manual as
 it's always been.
 
-#### #1. Function composibility
-Almost every function defined by libstx is composible with every other function
+#### #1. Function compatibility
+Almost every function defined by libstx can be composed with every other function
 defined in the library. What this means is that most function's return value
 can be used as a parameter in another function of the library. This feature is
 true for all functions so long as they don't modify the stx memory buffer with
