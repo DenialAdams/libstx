@@ -53,9 +53,10 @@ stxutf8n32(uint32_t wc)
 	return len;
 }
 
-int
-stxutf8f32(void *dest, uint32_t wc, size_t n)
+size_t
+stxutf8f32(void *dest, uint32_t wc)
 {
+	size_t n = stxutf8n32(wc);
 	uint8_t header;
 	switch (n) {
 	case 1:
@@ -72,7 +73,7 @@ stxutf8f32(void *dest, uint32_t wc, size_t n)
 		break;
 	default:
 		// Error case.
-		return -1;
+		return n;
 		break;
 	}
 
@@ -83,5 +84,5 @@ stxutf8f32(void *dest, uint32_t wc, size_t n)
 
 	((uint8_t *)dest)[0] = (header | wc);
 
-	return 0;
+	return n;
 }

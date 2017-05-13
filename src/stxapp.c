@@ -23,13 +23,12 @@ stxapp_str(stx *sp, const char *src)
 stx *
 stxapp_utf8f32(stx *sp, uint32_t wc)
 {
-	int n = stxutf8n32(wc);
-	char uni8[n];
+	char uni8[4];
+	size_t n = stxutf8f32(uni8, wc);
 
 	if (0 >= n)
 		return sp;
 
-	stxutf8f32(uni8, wc, n);
 
 	return stxapp_mem(sp, uni8, n);
 }

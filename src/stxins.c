@@ -28,13 +28,11 @@ stxins_str(stx *sp, size_t pos, const char *src)
 stx *
 stxins_utf8f32(stx *sp, size_t pos, uint32_t wc)
 {
-	int n = stxutf8n32(wc);
-	char uni8[n];
+	char uni8[4];
+	size_t n = stxutf8f32(uni8, wc);
 
 	if (0 >= n)
 		return sp;
-
-	stxutf8f32(uni8, wc, n);
 
 	return stxins_mem(sp, pos, uni8, n);
 }
