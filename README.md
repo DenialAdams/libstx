@@ -27,10 +27,28 @@ main(int argc, char **argv)
 	// Now initialize the contents of sp with "hello".
 	stxlstrip(stxcpy_str(&sp, "    hello"), " ", 1);
 
-	stxapp(&sp, " world");
+	stxapp_str(&sp, " world");
 
 	// This should print out "hello world" to stdout.
 	printf("%.*s\n", sp.len, sp.mem);
+}
+```
+
+#### #2. Finding a substring and slicing it
+```
+#include <libstx.h>
+
+int
+main(int argc, char **argv)
+{
+	stx sp; // Doesn't have to be initialized if using stxalloc.
+	stxdup_str(&sp, "hello world");
+
+	// Create a reference to the memory of "sp"
+	spx slice = stxfind_str(stxref(&sp), "world");
+
+	// This should print out "world" to stdout.
+	printf("%.*s\n", slice.len, slice.mem);
 }
 ```
 
