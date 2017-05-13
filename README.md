@@ -1,6 +1,6 @@
 ## libstx - Dynamic String Handling Library
 
-## How to install
+## How to Install
 
 Before installing, the file named "config.mk" should be edited to fit the
 requirements of your system. Once the configuration file is all set, installing
