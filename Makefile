@@ -32,8 +32,10 @@ FUN =\
 
 MAN3 = $(addprefix ${DOC_DIR}/, ${FUN:=.3})
 MAN7 = $(addprefix ${DOC_DIR}/, ${TARGET:.a=.7})
-MAN3PDF = ${MAN3:.3=.pdf}
-MAN7PDF = ${MAN7:.7=.pdf}
+MANPDF = ${MAN3:.3=.pdf}
+MANPDF += ${MAN7:.7=.pdf}
+MANHTML = ${MAN3:.3=.html}
+MANHTML += ${MAN7:.7=.html}
 
 SRC = $(addprefix ${SRC_DIR}/, ${FUN:=.c})
 OBJ = $(addprefix ${SRC_DIR}/, ${FUN:=.o})
@@ -45,6 +47,8 @@ TARGET = libstx.a
 
 DIST = $(basename ${TARGET})-${VERSION}
 DIST_FILES = ${TEST_DIR} ${SRC_DIR} ${MAN_DIR} libstx.h Makefile README config.mk
+
+# Core make targets
 
 all: ${TARGET}
 
@@ -78,7 +82,7 @@ check: test
 
 clean:
 	@printf "Cleaning ... "
-	@rm -f ${OBJ} ${TARGET} ${TEST} ${DIST}.tar.gz ${MAN3PDF} ${MAN7PDF}
+	@rm -f ${OBJ} ${TARGET} ${TEST} ${DIST}.tar.gz ${MANPDF} ${MANHTML}
 	@printf "done.\n"
 
 dist: clean
@@ -109,12 +113,22 @@ uninstall:
 	@printf "Removing library header from ${DESTDIR}${INCLUDEPREFIX}.\n"
 	@rm -f ${DESTDIR}${PREFIX}/include/libstx.h
 
+# Documentation generation for different formats
+
 %.pdf: %.3
 	man -t $< | ps2pdf - $@
 
 %.pdf: %.7
 	man -t $< | ps2pdf - $@
 
-pdf: ${MAN3PDF} ${MAN7PDF}
+%.html: %.3
+	cat $< | groff -mandoc -Thtml > $@
+
+%.html: %.7
+	cat $< | groff -mandoc -Thtml > $@
+
+pdf: ${MANPDF}
+
+html: ${MANHTML}
 
 .PHONY: all options check clean dist install uninstall

@@ -4,6 +4,7 @@
 *.so
 *.test
 *.pdf
+*.html
 
 # Packages
 *.tar
