@@ -10,10 +10,23 @@
 terminates
 .I s1->mem
 with the '\0' character at index
-.IR s1->len -\ 1.
+.I s1->len
+if and only if
+.I s1->len
+>
+.IR s1->size .
+The null-byte won't be added to
+.I s1->len
+so it is "invisible" for all intents and purposes.
 .P
-This function is useful if null-terminating bytes are required to inter-op with
-traditional C functions that require strings to be null-terminated character
+In the case that
+.I s1->len
+>=
+.I s1->size
+then no null byte will be written to
+.IR s1->mem .
+This function is useful if a temporary null-terminatin byte is required to
+inter-op with C functions that require strings to be null terminated.
 arrays.
 .SH SEE ALSO
 .B libstx (7)
