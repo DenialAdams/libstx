@@ -57,7 +57,7 @@ TEST_DEFINE(stxutf8f32_1byte)
 
 	for (uint32_t wc=0; wc<128; ++wc) {
 		set_target[wc] = wc;
-		TEST_ASSERT(1 == stxutf8f32(set_1byte + wc, wc, 1));
+		TEST_ASSERT(0 == stxutf8f32(set_1byte + wc, wc, 1));
 	}
 
 	TEST_ASSERT(0 == memcmp(set_target, set_1byte, sizeof(set_target)));
@@ -74,7 +74,7 @@ TEST_DEFINE(stxutf8f32_2byte)
 		uint32_t i = (wc - 0x80) * 2;
 		set_target[i] = (0x06 << 5) | (wc >> 6);
 		set_target[i + 1] = (0x02 << 6) | (wc & 0x3F);
-		TEST_ASSERT(2 == stxutf8f32(set_2byte + i, wc, 2));
+		TEST_ASSERT(0 == stxutf8f32(set_2byte + i, wc, 2));
 	}
 
 	TEST_ASSERT(0 == memcmp(set_target, set_2byte, sizeof(set_2byte)));
@@ -92,7 +92,7 @@ TEST_DEFINE(stxutf8f32_3byte)
 		set_target[i] = (0x0E << 4) | (wc >> 12);
 		set_target[i + 1] = (0x02 << 6) | ((wc >> 6) & 0x3F);
 		set_target[i + 2] = (0x02 << 6) | (wc & 0x3F);
-		TEST_ASSERT(3 == stxutf8f32(set_3byte + i, wc, 3));
+		TEST_ASSERT(0 == stxutf8f32(set_3byte + i, wc, 3));
 	}
 
 	TEST_ASSERT(0 == memcmp(set_target, set_3byte, sizeof(set_3byte)));
@@ -111,7 +111,7 @@ TEST_DEFINE(stxutf8f32_4byte)
 		set_target[i + 1] = (0x02 << 6) | ((wc >> 12) & 0x3F);
 		set_target[i + 2] = (0x02 << 6) | ((wc >> 6 ) & 0x3F);
 		set_target[i + 3] = (0x02 << 6) | (wc & 0x3F);
-		TEST_ASSERT(4 == stxutf8f32(set_4byte + i, wc, 4));
+		TEST_ASSERT(0 == stxutf8f32(set_4byte + i, wc, 4));
 	}
 
 	TEST_ASSERT(0 == memcmp(set_target, set_4byte, sizeof(set_4byte)));

@@ -131,6 +131,6 @@ size_t stxutf8len(const spx sp);
 // Calculate the number of bytes for a utf8 encoding of a utf32 code point.
 size_t stxutf8n32(uint32_t wc);
 // Convert a "wc" into a utf8 encoding "n" bytes long and store it in "dst".
-size_t stxutf8f32(void *dst, uint32_t wc, size_t n);
+int stxutf8f32(void *dest, uint32_t wc, size_t n);
 
 #endif

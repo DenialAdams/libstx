@@ -53,8 +53,8 @@ stxutf8n32(uint32_t wc)
 	return len;
 }
 
-size_t
-stxutf8f32(void *dst, uint32_t wc, size_t n)
+int
+stxutf8f32(void *dest, uint32_t wc, size_t n)
 {
 	uint8_t header;
 	switch (n) {
@@ -72,16 +72,16 @@ stxutf8f32(void *dst, uint32_t wc, size_t n)
 		break;
 	default:
 		// Error case.
-		return n;
+		return -1;
 		break;
 	}
 
 	for (int i = n-1; i > 0; --i) {
-		((uint8_t *)dst)[i] = (UTF8_HC | (wc & 0x3F));
+		((uint8_t *)dest)[i] = (UTF8_HC | (wc & 0x3F));
 		wc >>= 6;
 	}
 
-	((uint8_t *)dst)[0] = (header | wc);
+	((uint8_t *)dest)[0] = (header | wc);
 
-	return n;
+	return 0;
 }
