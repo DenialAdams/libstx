@@ -1,4 +1,4 @@
-## libstx - Dynamic String Handling Library
+# libstx - Dynamic String Handling Library
 
 ## How to Install
 
