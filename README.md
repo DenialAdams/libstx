@@ -16,7 +16,24 @@ the "-lstx" flag e.g.
 `cc -o myfoo myfoo.c -lstx`
 
 ## Examples
-TODO
+#### #1. Printing hello world with extra steps
+`
+#include <libstx.h>
+
+int
+main(int argc, char **argv)
+{
+	stx sp; // Doesn't have to be initialized if using stxalloc.
+	stxalloc(&sp, 5);
+
+	// Now initialize the contents of sp with "world".
+	stxlstrip(stxcpy_str(&sp, "    hello"), " ", 1);
+
+	stxapp(&sp, " world");
+
+	printf("%.*s\n", sp.len, sp.mem);
+}
+`
 
 ## Implementation
 libstx implements two basic data structures, the stx and the spx. The spx
@@ -28,7 +45,7 @@ libstx is a fairly standard string implementation when compared to most other C
 string libraries, however there are a few special properties it was created with
 in mind that seperates it from the rest.
 
-#### (0)
+#### #0. Memory and allocation
 Memory management is completely manual. For example, before appending to a stx,
 there must be enough memory allocated to the stx in the first place or else
 undefined behavior will occur.
@@ -43,7 +60,7 @@ However this is a disadvantage as it makes buffer overruns easier to
 accidently implement, and as usual manual memory management is just as manual as
 it's always been.
 
-#### (1)
+#### #1. Function composibility
 Almost every function defined by libstx is composible with every other function
 defined in the library. What this means is that most function's return value
 can be used as a parameter in another function of the library. This feature is
