@@ -24,11 +24,12 @@ main(int argc, char **argv)
 	stx sp; // Doesn't have to be initialized if using stxalloc.
 	stxalloc(&sp, 5);
 
-	// Now initialize the contents of sp with "world".
+	// Now initialize the contents of sp with "hello".
 	stxlstrip(stxcpy_str(&sp, "    hello"), " ", 1);
 
 	stxapp(&sp, " world");
 
+	// This should print out "hello world" to stdout.
 	printf("%.*s\n", sp.len, sp.mem);
 }
 ```
