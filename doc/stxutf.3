@@ -1,0 +1,54 @@
+.TH STXUTF 3 libstx
+.SH NAME
+stxutf_8f32, stxutf_8n32, stxutf8len - Various UTF functions for libstx.
+.SH SYNOPSIS
+.B #include <libstx.h>
+
+.B int stxutf8f32(void *\fIdest\fP, uint32_t \fIwc\fP);
+
+.B size_t stxutf8n32(uint32_t \fIsrc\fP);
+
+.B size_t stxutf8len(const spx \fIsp\fP);
+.SH DESCRIPTION
+.BR stxutf8f32 ()
+converts a single utf32 representation of a unicode code point 
+.I wc
+into a multibyte utf8 character sequence up to 4 bytes long and writes it to
+.IR dest .
+.P
+.BR stxutf8n32 ()
+Does not do any utf8 conversion. Instead, all that is done is a check on the
+utf32 character code point to see how many bytes the utf8 encoding of the
+character would use. This is useful if the size of the utf8 encoding of a
+unicode character is unknown during runtime, and the buffer of
+.I sp
+needs to be grown to accodate it.
+.P
+.BR stxutf8len ()
+Calculates the length of
+.I sp
+in terms of how many utf8 encoded characters there are, (not the number of
+bytes).
+.SH RETURN VALUE
+.BR stxutf8f32 ()
+and
+.BR stxutf8n32 ()
+both return the number of bytes the utf8 encoding of 
+.I wc
+uses. If
+.I wc
+is outside the maximum range of unicode code points, then 0 is returned. In the
+case of
+.BR stxutf8f32 (),
+no encoding is done and no characters are written to
+.IR dest .
+.P
+.BR stxutf8len
+returns the total number of utf8 encoded characters in
+.IR sp .
+This number may be different than the number stored in
+.I sp.len
+since utf8 is a variable byte encoding. If there is an invalid utf8 character in
+the string, then 0 is returned (As it is not a valid utf8 string).
+.SH SEE ALSO
+.BR libstx (7)
