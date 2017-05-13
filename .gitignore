@@ -3,6 +3,7 @@
 *.a
 *.so
 *.test
+*.pdf
 
 # Packages
 *.tar

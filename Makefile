@@ -30,8 +30,10 @@ FUN =\
 	stxutf\
 	stxvalid\
 
-MAN3 = ${FUN:=.3}
-MAN7 = ${TARGET:.a=.7}
+MAN3 = $(addprefix ${DOC_DIR}/, ${FUN:=.3})
+MAN7 = $(addprefix ${DOC_DIR}/, ${TARGET:.a=.7})
+MAN3PDF = ${MAN3:.3=.pdf}
+MAN7PDF = ${MAN7:.7=.pdf}
 
 SRC = $(addprefix ${SRC_DIR}/, ${FUN:=.c})
 OBJ = $(addprefix ${SRC_DIR}/, ${FUN:=.o})
@@ -76,7 +78,7 @@ check: test
 
 clean:
 	@printf "Cleaning ... "
-	@rm -f ${OBJ} ${TARGET} ${TEST} ${DIST}.tar.gz
+	@rm -f ${OBJ} ${TARGET} ${TEST} ${DIST}.tar.gz ${MAN3PDF} ${MAN7PDF}
 	@printf "done.\n"
 
 dist: clean
@@ -97,9 +99,9 @@ install: all
 	@cp -f libstx.h ${DESTDIR}${INCLUDEPREFIX}
 	@printf "Installing man pages to ${DESTDIR}${MANPREFIX}.\n"
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man7
-	@cp -f $(addprefix ${DOC_DIR}/, ${MAN7}) ${DESTDIR}${MANPREFIX}/man7  
+	@cp -f ${MAN7} ${DESTDIR}${MANPREFIX}/man7  
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man3
-	@cp -f $(addprefix ${DOC_DIR}/, ${MAN3}) ${DESTDIR}${MANPREFIX}/man3
+	@cp -f ${MAN3} ${DESTDIR}${MANPREFIX}/man3
 
 uninstall:
 	@printf "Removing library archive from ${DESTDIR}${LIBPREFIX}.\n"
@@ -107,6 +109,12 @@ uninstall:
 	@printf "Removing library header from ${DESTDIR}${INCLUDEPREFIX}.\n"
 	@rm -f ${DESTDIR}${PREFIX}/include/libstx.h
 
-#man -t $< | ps2pdf - $@.pdf
+%.pdf: %.3
+	man -t $< | ps2pdf - $@
+
+%.pdf: %.7
+	man -t $< | ps2pdf - $@
+
+pdf: ${MAN3PDF} ${MAN7PDF}
 
 .PHONY: all options check clean dist install uninstall
