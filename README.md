@@ -16,6 +16,7 @@ the "-lstx" flag e.g.
 ## Examples
 #### #1. Printing hello world with extra steps
 ```
+C
 #include <libstx.h>
 
 int
@@ -36,6 +37,7 @@ main(int argc, char **argv)
 
 #### #2. Finding a substring and slicing it
 ```
+C
 #include <libstx.h>
 
 int
@@ -77,7 +79,7 @@ However this is a disadvantage as it makes buffer overruns easier to
 accidentally implement, and as usual manual memory management is just as manual as
 it's always been.
 
-#### #1. Function compatibility
+#### #1. Function composition
 Almost every function defined by libstx can be composed with every other function
 defined in the library. What this means is that most function's return value
 can be used as a parameter in another function of the library. This feature is
