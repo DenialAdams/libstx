@@ -92,9 +92,9 @@ provided for certain functions as well if C11 is being used.
 Please follow the general style of the codebase when contributing to libstx.
 There isn't a defintive style-guide written yet, however the general rules are:
 
-1) tabs instead of spaces
+1) Tabs instead of spaces
 
-2) line-length should not exceed 80 characters unless it is a string-literal.
+2) Line-length should not exceed 80 characters unless it is a string-literal.
 
 3) Function names, function types, and function curly braces get their own line,
 while keyword curly braces stay on the same line (K&R style).
