@@ -1,0 +1,28 @@
+.TH STXSWAP 3 libstx
+.SH NAME
+ stxref - Create a spx reference from a stx.
+.SH SYNOPSIS
+.B #include <libstx.h>
+
+.B spx stxref(stx *\fIsp\fP);
+.SH DESCRIPTION
+.BR stxref ()
+takes a stx object as its first parameter, 
+.IR s1 .
+Then a spx object with it's
+.I .mem
+field pointing to
+.I sp->mem
+and it's .len field set to
+.IR sp->len .
+.P
+If
+.I sp
+is NULL, the behavior is undefined.
+.SH RETURN VALUE
+.BR stxref ()
+returns the spx object created that references
+.I sp
+.
+.SH SEE ALSO
+.B libstx (7)
