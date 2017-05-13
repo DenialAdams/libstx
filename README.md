@@ -14,6 +14,7 @@ After this is run, the library can be linked to other C code when compiling with
 the "-lstx" flag, e.g. `cc -o myfoo myfoo.c -lstx`
 
 ## Examples
+TODO
 
 ## Implementation
 libstx implements two basic data structures, the stx and the spx. The spx
@@ -65,3 +66,8 @@ while keyword curly braces stay on the same line (K&R style).
 Also, as a general rule of thumb, all tests should pass with every commit
 (unless there is a good reason to break them, such as a test not working or a
 major version change).
+
+Also, there is a handy git hook provided in the bin/ folder of the
+project to make sure commit messages are formatted properly called "commit-msg".
+To use it, just symlink the file to your .git/hooks/ folder in your local clone
+of the repository.
