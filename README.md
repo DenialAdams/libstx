@@ -15,8 +15,7 @@ the "-lstx" flag e.g.
 
 ## Examples
 #### #1. Printing hello world with extra steps
-```
-C
+```C
 #include <libstx.h>
 
 int
@@ -36,8 +35,7 @@ main(int argc, char **argv)
 ```
 
 #### #2. Finding a substring and slicing it
-```
-C
+```C
 #include <libstx.h>
 
 int
