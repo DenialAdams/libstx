@@ -1,5 +1,32 @@
 # libstx - Dynamic String Handling Library
 
+## Why use libstx
+libstx is a fairly standard string implementation when compared to most other C
+string libraries, however there are a few special properties it was created with
+in mind that separates it from the rest.
+
+#### #0. Memory and allocation
+Memory management is completely manual. For example, before appending to a stx,
+there must be enough memory allocated to the stx in the first place or else
+undefined behavior will occur.
+
+This is an advantage in the sense that
+ultimate control of memory is given to the programmer, just as in traditional C,
+and because of that memory doesn't need to be over-allocated or allocated at the
+wrong time. Also, since reallocations can be more directly controlled,
+the lifetimes of references to a stx can be more tightly controlled.
+
+However this is a disadvantage as it makes buffer overruns easier to
+accidentally implement, and as usual manual memory management is just as manual as
+it's always been.
+
+#### #1. Function composition
+Almost every function defined by libstx can be composed with every other function
+defined in the library. What this means is that most function's return value
+can be used as a parameter in another function of the library. This feature is
+true for all functions so long as they don't modify the stx memory buffer with
+functions such as _malloc_() or _realloc_().
+
 ## How to Install
 
 Before installing, the file named "config.mk" should be edited to fit the
@@ -56,33 +83,6 @@ main(int argc, char **argv)
 libstx implements two basic data structures, the stx and the spx. The spx
 structure is designed to contain mutable and resizable strings, while
 the spx structure contains only a pointer of a string and it's length.
-
-## Why use libstx
-libstx is a fairly standard string implementation when compared to most other C
-string libraries, however there are a few special properties it was created with
-in mind that separates it from the rest.
-
-#### #0. Memory and allocation
-Memory management is completely manual. For example, before appending to a stx,
-there must be enough memory allocated to the stx in the first place or else
-undefined behavior will occur.
-
-This is an advantage in the sense that
-ultimate control of memory is given to the programmer, just as in traditional C,
-and because of that memory doesn't need to be over-allocated or allocated at the
-wrong time. Also, since reallocations can be more directly controlled,
-the lifetimes of references to a stx can be more tightly controlled.
-
-However this is a disadvantage as it makes buffer overruns easier to
-accidentally implement, and as usual manual memory management is just as manual as
-it's always been.
-
-#### #1. Function composition
-Almost every function defined by libstx can be composed with every other function
-defined in the library. What this means is that most function's return value
-can be used as a parameter in another function of the library. This feature is
-true for all functions so long as they don't modify the stx memory buffer with
-functions such as _malloc_() or _realloc_().
 
 ## Compatibility
 libstx is compatible with the C99 standard and onwards. C11 _Generic macros are
