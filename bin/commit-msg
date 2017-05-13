@@ -42,7 +42,6 @@ while true; do
 
 	printf -- "Validation failed, return to \"%s\"? [Y/n]\n" "$EDITOR"
 
-
 	read REPLY
 	case "$REPLY" in
 	Y|y)
