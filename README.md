@@ -41,7 +41,7 @@ main(int argc, char **argv)
 int
 main(int argc, char **argv)
 {
-	stx sp; // Doesn't have to be initialized if using stxalloc.
+	stx sp; // Doesn't have to be initialized if using stxdup.
 	stxdup_str(&sp, "hello world");
 
 	// Create a reference to the memory of "sp"
