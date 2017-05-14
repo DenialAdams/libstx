@@ -1,0 +1,33 @@
+.TH STXSLICE 3 libstx
+.SH NAME
+ stxref - Create a spx as a slice of a stx.
+.SH SYNOPSIS
+.B #include <libstx.h>
+
+.B spx stxslice(stx *\fIsp\fP, size_t \fIbeing\fP, size_t \fIend\fP);
+.SH DESCRIPTION
+.BR stxslice ()
+Creates an spx that references the stx
+.I sp
+with the spx's
+.I .mem
+field pointing to
+.IR sp->mem\  +\  begin ,
+and setting the spx's
+.I .len
+field to
+.IR end .
+This allows for easy creation of spx's that reference a specfic substring
+inside of
+.IR sp .
+.SH RETURN VALUE
+.BR stxslice ()
+returns the spx object created that references
+.I sp
+from
+.I begin
+to
+.IR end .
+.SH SEE ALSO
+.BR libstx (7)
+.BR stxref (3)
