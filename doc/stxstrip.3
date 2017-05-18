@@ -1,0 +1,37 @@
+.TH STXSTRIP 3 libstx
+.SH NAME
+stxrstrip, stxlstrip, stxstrip- strip bytes from a stx.
+.SH SYNOPSIS
+.B #include <libstx.h>
+
+.B spx stxrstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
+
+.B spx stxlstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
+
+.B spx stxstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
+.SH DESCRIPTION
+.BR stxrstrip ()
+strips from the right all bytes matching any bytes withing the first
+.I n
+bytes of 
+.I chs
+from
+.IR sp .
+.P
+.BR stxlstrip ()
+does the same as
+.BR stxrstrip (),
+except it strips from the left rather than the right.
+.BR stxstrip ()
+executes both stxrstrip and stxlstrip, effectively stripping bytes from
+both sides of
+.IR sp .
+.SH RETURN VALUE
+.BR stxrstrip (),
+.BR stxlstrip (),
+and
+.BR stxstrip ()
+return the number of bytes stripped from
+.IR sp .
+.SH SEE ALSO
+.BR libstx (7)
