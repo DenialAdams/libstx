@@ -1,0 +1,26 @@
+.TH STXVALID 3 libstx
+.SH NAME
+ stxvalid - Validate the contents of an invariant stx.
+.SH SYNOPSIS
+.B #include <libstx.h>
+
+.B bool stxvalid(stx *\fIsp\fP);
+.SH DESCRIPTION
+.BR stxvalid ()
+Validates
+.I sp
+to see if it's contents "make sense" as far as libstx is concerned.
+.P
+In order for
+.I sp
+to be valid, it cannot be NULL,
+.I sp->mem
+cannot be NULL, and
+.I sp->size
+must be less than
+.IR sp->len .
+.SH RETURN
+.BR stxvalid ()
+returns true if the above properties hold. Returns false otherwise.
+.SH SEE ALSO
+.B libstx (7)
