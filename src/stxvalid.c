@@ -2,11 +2,11 @@
 #include "internal.h"
 
 bool
-stxvalid(stx *s1)
+stxvalid(stx *sp)
 {
-	if (!s1)
+	if (!sp)
 		return false;
-	if (!s1->mem || s1->size < s1->len)
+	if (!sp->mem || sp->size < sp->len)
 		return false;
 
 	return true;
