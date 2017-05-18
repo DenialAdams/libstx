@@ -4,11 +4,11 @@ stxrstrip, stxlstrip, stxstrip- strip bytes from a stx.
 .SH SYNOPSIS
 .B #include <libstx.h>
 
-.B spx stxrstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
+.B size_t stxrstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
 
-.B spx stxlstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
+.B size_t stxlstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
 
-.B spx stxstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
+.B size_t stxstrip(stx *\fIsp\fP, const void *\fIchs\fP, size_t \fIn\fP);
 .SH DESCRIPTION
 .BR stxrstrip ()
 strips from the right all bytes matching any bytes withing the first
