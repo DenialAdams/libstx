@@ -119,9 +119,9 @@ spx stxfind_spx(const spx haystack, const spx needle);
 spx stxslice(const spx sp, size_t begin, size_t end);
 
 // Strip characters from a stx.
-stx *stxrstrip(stx *sp, const char *chs, size_t n);
-stx *stxlstrip(stx *sp, const char *chs, size_t n);
-stx *stxstrip(stx *sp, const char *chs, size_t n);
+stx *stxrstrip(stx *sp, const void *chs, size_t n);
+stx *stxlstrip(stx *sp, const void *chs, size_t n);
+stx *stxstrip(stx *sp, const void *chs, size_t n);
 
 // Tokenize a spx.
 spx stxtok(spx *sp, const char *chs, size_t n);

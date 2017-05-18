@@ -2,7 +2,7 @@
 #include "internal.h"
 
 stx *
-stxlstrip(stx *s1, const char *chs, size_t len)
+stxlstrip(stx *s1, const void *chs, size_t len)
 {
 	size_t removed = 0;
 	char *begin = s1->mem;
@@ -21,7 +21,7 @@ stxlstrip(stx *s1, const char *chs, size_t len)
 }
 
 stx *
-stxrstrip(stx *s1, const char *chs, size_t len)
+stxrstrip(stx *s1, const void *chs, size_t len)
 {
 	if (0 == s1->len)
 		return s1;
@@ -40,7 +40,7 @@ stxrstrip(stx *s1, const char *chs, size_t len)
 }
 
 stx *
-stxstrip(stx *s1, const char *chs, size_t len)
+stxstrip(stx *s1, const void *chs, size_t len)
 {
 	s1 = stxlstrip(s1, chs, len);
 	s1 = stxrstrip(s1, chs, len);
