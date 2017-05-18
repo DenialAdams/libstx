@@ -5,6 +5,13 @@
 #include "../libstx.h"
 #include "test.h"
 
+TEST_DEFINE(stxutf8len_1through4)
+{
+	spx str = {10, "a£ก𐊀"};
+	TEST_ASSERT(4 == stxutf8len(str));
+	TEST_END;
+}
+
 TEST_DEFINE(stxutf8n32_1byte)
 {
 	for (uint32_t wc=0; wc<128; ++wc) {
@@ -133,5 +140,6 @@ main(void)
 	TEST_RUN(ts, stxutf8f32_2byte);
 	TEST_RUN(ts, stxutf8f32_3byte);
 	TEST_RUN(ts, stxutf8f32_4byte);
+	TEST_RUN(ts, stxutf8len_1through4);
 	TEST_PRINT(ts);
 }

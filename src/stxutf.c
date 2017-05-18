@@ -2,12 +2,14 @@
 #include "internal.h"
 
 enum {
-	UTF8_H1 = 0x00,      // 1-byte header 0xxxxxxx.
+	UTF8_H1 = 0x00 << 7, // 1-byte header 0xxxxxxx.
 	UTF8_H2 = 0x06 << 5, // 2-byte header 110xxxxx.
-	UTF8_H3 = 0x0E << 4, // 3-byte header 1110xxxx.
-	UTF8_H4 = 0x1E << 3, // 4-byte header 11110xxx.
+	UTF8_H3 = 0x0e << 4, // 3-byte header 1110xxxx.
+	UTF8_H4 = 0x1e << 3, // 4-byte header 11110xxx.
 	UTF8_HC = 0x02 << 6, // Continuation byte header 10xxxxxx.
 };
+
+#include <stdio.h>
 
 size_t
 stxutf8len(const spx sp)
@@ -15,13 +17,14 @@ stxutf8len(const spx sp)
 	size_t n = 0;
 	size_t i = 0;
 	while (i < sp.len) {
-		if (sp.mem[i] & UTF8_H1) {
+		unsigned char ch = sp.mem[i];
+		if (0x0 == (sp.mem[i] >> 7)) {
 			i += 1;
-		} else if (sp.mem[i] & UTF8_H2) {
+		} else if (0x06 == (ch >> 5)) {
 			i += 2;
-		} else if (sp.mem[i] & UTF8_H3) {
+		} else if (0x0e == (ch >> 4)) {
 			i += 3;
-		} else if (sp.mem[i] & UTF8_H4) {
+		} else if (0x1e == (ch >> 3)) {
 			i += 4;
 		} else {
 			// Error condition.
