@@ -1,0 +1,29 @@
+.TH STXTOK 3 libstx
+.SH NAME
+ stxtok - Tokenize a stx.
+.SH SYNOPSIS
+.B #include <libstx.h>
+
+.B spx stxtok(spx *\fIslice\fP, const void *\fIchs\fP, size_t \fIn\fP);
+.SH DESCRIPTION
+.BR stxtok ()
+Tokenizes a stx or spx by reading a spx sliced from the original stx or spx.
+This slice keeps track of the current position during tokenisation. The spx is
+tokenized by slicing a stx in between the token delimiter specified by the first
+.I n
+bytes of
+.IR chs .
+.P
+For example, to tokenise a spx with a deliminator of the space character ' ',
+the function would be called like so
+
+spx token = \fBstxtok\fP(slice, " ", 1);
+
+.SH RETURN VALUE
+.BR stxtok ()
+returns the next token from the slice as a spx. If the returned spx is the same
+as the slice, then tokenisation has finished.
+.SH SEE ALSO
+.BR libstx (7),
+.BR stxref (3)
+.BR stxslice (3)
