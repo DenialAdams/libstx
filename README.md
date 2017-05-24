@@ -5,7 +5,7 @@ libstx is a fairly standard string implementation when compared to most other C
 string libraries, however there are a few special properties it was created with
 in mind that separates it from the rest.
 
-#### #0. Memory and allocation
+#### #1. Memory and allocation
 Memory management is completely manual. For example, before appending to a stx,
 there must be enough memory allocated to the stx in the first place or else
 undefined behavior will occur.
@@ -20,7 +20,7 @@ However this is a disadvantage as it makes buffer overruns easier to
 accidentally implement, and as usual manual memory management is just as manual as
 it's always been.
 
-#### #1. Function composition
+#### #2. Function composition
 Almost every function defined by libstx can be composed with every other function
 defined in the library. What this means is that most function's return value
 can be used as a parameter in another function of the library. This feature is
