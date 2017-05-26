@@ -18,7 +18,7 @@ static const stx s2 = {
 	.size = sizeof(b2) - 1,
 };
 
-TEST_DEFINE(stxtok_none)
+TEST_DEFINE(stxtok_chs_null)
 {
 	spx ref = stxref(&s1);
 	spx tok = stxtok(&ref, "\0", 1);
@@ -64,7 +64,7 @@ int
 main(void)
 {
 	TEST_INIT(ts);
-	TEST_RUN(ts, stxtok_none);
+	TEST_RUN(ts, stxtok_chs_null);
 	TEST_RUN(ts, stxtok_chs_space);
 	//TEST_RUN(ts, stxtok_chs_null_one);
 	TEST_PRINT(ts);
