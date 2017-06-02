@@ -18,7 +18,7 @@ stxutf8len(const spx sp)
 	size_t i = 0;
 	while (i < sp.len) {
 		unsigned char ch = sp.mem[i];
-		if (0x0 == (sp.mem[i] >> 7)) {
+		if (0x0 == (ch >> 7)) {
 			i += 1;
 		} else if (0x06 == (ch >> 5)) {
 			i += 2;
