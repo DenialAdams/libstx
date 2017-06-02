@@ -27,7 +27,7 @@ can be used as a parameter in another function of the library. This feature is
 true for all functions so long as they don't modify the stx memory buffer with
 functions such as _malloc_() or _realloc_().
 
-#### #3. Great utf8 support.
+#### #3. Great unicode support.
 utf8 characters can be inserted into a string by using their utf32 encoding,
 and a function for calculating the number of utf8 characters in a string is
 provided. A standalone function called stxutf8f32 is also provided to convert a
