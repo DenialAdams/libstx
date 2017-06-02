@@ -89,6 +89,7 @@ main(int argc, char **argv)
 	// Initialize a immutable spx reference with multibyte characters.
 	spx str = {10, "a£ก𐊀"}
 
+	// This is an O(n) function just like the strlen() function.
 	size_t n = stxutf8len(str);
 
 	// This will print out the number '4' to stdout.
