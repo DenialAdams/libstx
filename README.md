@@ -27,6 +27,14 @@ can be used as a parameter in another function of the library. This feature is
 true for all functions so long as they don't modify the stx memory buffer with
 functions such as _malloc_() or _realloc_().
 
+#### #3. Great utf8 support.
+utf8 characters can be inserted into a string by using their utf32 encoding,
+and a function for calculating the number of utf8 characters in a string is
+provided. A standalone function called stxutf8f32 is also provided to convert a
+to convert a utf32 encoding to a utf8 encoding in such a way that isn't
+dependent on any of the data structures provided by libstx (i.e. converts a
+uint32_t to a char *).
+
 ## How to Install
 
 Before installing, the file named "config.mk" should be edited to fit the
