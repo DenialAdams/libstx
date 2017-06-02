@@ -79,7 +79,7 @@ main(int argc, char **argv)
 }
 ```
 
-#### #3. Getting the length of a spx with utf8 characters.
+#### #3. Getting the length of a string with utf8 characters.
 ```C
 #include <libstx.h>
 
