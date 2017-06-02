@@ -56,7 +56,7 @@ main(int argc, char **argv)
 
 	stxapp_str(&sp, " world");
 
-	// This should print out "hello world" to stdout.
+	// This will print out "hello world" to stdout.
 	printf("%.*s\n", sp.len, sp.mem);
 }
 ```
@@ -74,15 +74,32 @@ main(int argc, char **argv)
 	// Create a reference to the memory of "sp"
 	spx slice = stxfind_str(stxref(&sp), "world");
 
-	// This should print out "world" to stdout.
+	// This will print out "world" to stdout.
 	printf("%.*s\n", slice.len, slice.mem);
+}
+```
+
+#### #3. Getting the length of a spx with utf8 characters.
+```C
+#include <libstx.h>
+
+int
+main(int argc, char **argv)
+{
+	// Initialize a immutable spx reference with multibyte characters.
+	spx str = {10, "a£ก𐊀"}
+
+	size_t n = stxutf8len(str);
+
+	// This will print out the number '4' to stdout.
+	printf("%zu\n", n);
 }
 ```
 
 ## Implementation
 libstx implements two basic data structures, the stx and the spx. The spx
 structure is designed to contain mutable and resizable strings, while
-the spx structure contains only a pointer of a string and it's length.
+the spx structure contains only a pointer to a string and it's length.
 
 ## Compatibility
 libstx is compatible with the C99 standard and onwards. C11 _Generic macros are
