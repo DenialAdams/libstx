@@ -5,6 +5,7 @@
 .B #include <libstx.h>
 
 .B spx stxref(stx *\fIsp\fP);
+.B spx stxr(stx \fIsp\fP);
 .SH DESCRIPTION
 .BR stxref ()
 takes a stx object as its first parameter, 
@@ -19,6 +20,18 @@ and it's .len field set to
 If
 .I sp
 is NULL, the behavior is undefined.
+.P
+.BR stxr ()
+is a macro that is shorthand for referencing a stx object with the '&' operator
+and passing it to the
+.BR stxref ()
+function.
+.P
+Calling
+.BR stxr (\fIsp\fP)
+is an equivalent call to
+.BR stxref (&\fIsp\fP)
+except it is easier to type and keeps lines shorter.
 .SH RETURN VALUE
 .BR stxref ()
 returns the spx object created that references

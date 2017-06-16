@@ -37,6 +37,9 @@
 #endif
 #endif
 
+// Convience macro for creating references.
+#define stxr(x) stxref(&(x))
+
 /**
  * Dynamic and modifiable string data structure. Contents are modifiable and
  * contains both the size of the memory, and how much is being used.
