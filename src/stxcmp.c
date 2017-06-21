@@ -17,6 +17,7 @@ stxcmp(const spx s1, const spx s2)
 			return false;
 	}
 
+	// Compare the individual leftover bytes.
 	const size_t n = chunks * sizeof(i);
 	for (i = 0; i < s1.len % sizeof(i); ++i) {
 		if (s1.mem[n + i] != s2.mem[n + i])
