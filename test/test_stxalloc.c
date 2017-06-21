@@ -33,7 +33,8 @@ TEST_DEFINE(stxalloc_max)
 	TEST_END;
 }
 
-TEST_DEFINE(stxalloc_twice_rand) {
+TEST_DEFINE(stxalloc_twice_rand)
+{
 	stx s1;
 	char *p;
 
