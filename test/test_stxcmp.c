@@ -79,6 +79,34 @@ TEST_DEFINE(stxcmp_same_bytes)
 	TEST_END;
 }
 
+TEST_DEFINE(stxcmp_aligned_bytes)
+{
+	size_t s = sizeof(size_t);
+
+	char a[s + 1];
+	char b[s + 1];
+
+	memset(a, '0', s);
+	memset(b, '0', s);
+
+	a[s] = 'a';
+	b[s] = 'b';
+
+	spx s1 = {
+		.mem = a,
+		.len = s + 1,
+	};
+
+	spx s2 = {
+		.mem = b,
+		.len = s + 1,
+	};
+
+	TEST_ASSERT(false == stxcmp(s1, s2));
+
+	TEST_END;
+}
+
 int
 main(void)
 {
@@ -103,5 +131,6 @@ main(void)
 	TEST_RUN(ts, stxcmp_same_str);
 	TEST_RUN(ts, stxcmp_diff_bytes);
 	TEST_RUN(ts, stxcmp_same_bytes);
+	TEST_RUN(ts, stxcmp_aligned_bytes);
 	TEST_PRINT(ts);
 }
