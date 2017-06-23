@@ -27,7 +27,7 @@ stxutf8len(const spx sp)
 		} else if (0x1e == (ch >> 3)) {
 			i += 4;
 		} else {
-			// Error condition.
+			// Error, invalid encoding.
 			return 0;
 		}
 		++n;
@@ -49,7 +49,7 @@ stxutf8n32(uint32_t wc)
 	} else if (wc < 0x11000) {
 		len = 4;
 	} else {
-		// Error case.
+		// Error, invalid encoding.
 		len = 0;
 	}
 
