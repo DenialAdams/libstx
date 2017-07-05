@@ -88,6 +88,13 @@ void stxswap(stx *s1, stx *s2);
 stx *stxtrunc(stx *sp, size_t n);
 stx *stxterm(stx *sp);
 
+static inline stx *
+stxres(stx *sp)
+{
+	sp->len = 0;
+	return sp;
+}
+
 // Create a spx reference from a stx.
 spx stxref(const stx *sp);
 
