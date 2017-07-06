@@ -106,9 +106,10 @@ main(int argc, char **argv)
 ```
 
 ## Implementation
-libstx implements two basic data structures, the stx and the spx. The spx
-structure is designed to contain mutable and resizable strings, while
-the spx structure contains only a pointer to a string and it's length.
+libstx implements two basic data structures, the stx and the spx. The stx
+structure is designed to contain mutable and resizable data, while
+the spx structure contains only a const pointer to some memory and the length
+of the memory it points to.
 
 ## Compatibility
 libstx is compatible with the C99 standard and onwards. C11 _Generic macros are
