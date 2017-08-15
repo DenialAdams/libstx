@@ -20,6 +20,8 @@
 		spx: stxins_spx)(sp, src)
 
 #define stxapp(sp, src) _Generic((src), \
+		char: stxapp_char, \
+		const char: stxapp_char, \
 		const char *: stxapp_str, \
 		char *: stxapp_str, \
 		uint32_t: stxapp_utf8f32, \
@@ -115,6 +117,7 @@ stx *stxins_utf8f32(stx *sp, size_t pos, uint32_t wc);
 stx *stxins_spx(stx *sp, size_t pos, const spx src);
 
 // Append bytes to a stx.
+stx *stxapp_char(stx *sp, const char src);
 stx *stxapp_mem(stx *sp, const void *src, size_t n);
 stx *stxapp_str(stx *sp, const char *src);
 stx *stxapp_utf8f32(stx *sp, uint32_t wc);

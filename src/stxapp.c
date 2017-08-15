@@ -3,13 +3,20 @@
 #include <stdarg.h>
 
 stx *
+stxapp_char(stx *sp, char src)
+{
+	sp->mem[sp->len] = src;
+	sp->len += 1;
+	return sp;
+}
+
+stx *
 stxapp_mem(stx *sp, const void *src, size_t n)
 {
 	n = internal_min(sp->size, n);
 
 	memmove(sp->mem + sp->len, src, n);
 	sp->len += n;
-
 	return sp;
 }
 
@@ -28,8 +35,6 @@ stxapp_utf8f32(stx *sp, uint32_t wc)
 
 	if (0 >= n)
 		return sp;
-
-
 	return stxapp_mem(sp, uni8, n);
 }
 
