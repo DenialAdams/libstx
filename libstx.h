@@ -1,128 +1,58 @@
 /* See LICENSE file for copyright and license details */
-#ifndef LIBSTX_H
-#define LIBSTX_H
-
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-
-#ifdef __STDC__
-#if (__STDC_VERSION__ == 201112L)
-#define stxcpy(sp, src) _Generic((src), \
-		const char *: stxcpy_str, \
-		char *: stxcpy_str, \
-		spx: stxcpy_spx)(sp, src)
-
-#define stxins(sp, src) _Generic((src), \
-		const char *: stxins_str, \
-		char *: stxins_str, \
-		uint32_t: stxins_utf8f32, \
-		spx: stxins_spx)(sp, src)
-
-#define stxapp(sp, src) _Generic((src), \
-		char: stxapp_char, \
-		const char: stxapp_char, \
-		const char *: stxapp_str, \
-		char *: stxapp_str, \
-		uint32_t: stxapp_utf8f32, \
-		spx: stxapp_spx)(sp, src)
-
-#define stxfind(sp, src) _Generic((src), \
-		const char *: stxfind_str, \
-		char *: stxfind_str, \
-		spx: stxfind_spx)(sp, src)
-
-#define stxdup(sp, src) _Generic((src), \
-		const char *: stxdup_str, \
-		char *: stxdup_str, \
-		spx: stxdup_spx)(sp, src)
-#endif
-#endif
-
-// Convience macro for creating references.
-#define stxr(x) stxref(&(x))
-
 /**
  * Dynamic and modifiable string data structure. Contents are modifiable and
  * contains both the size of the memory, and how much is being used.
  */
-struct stx {
+typedef struct {
 	size_t len;
+	uint8_t *mem;
 	size_t size;
-	char *mem;
-};
+} String;
 
 /**
  * String slice data structure. Contains a read-only reference to a character
  * array and the length of the character array. Created by calling stxref() on
  * a struct stx.
  */
-struct spx {
+typedef struct {
 	size_t len;
-	const char *mem;
-};
+	uint8_t const *mem;
+} Str;
 
-typedef struct stx stx;
-typedef struct spx spx;
-
-// Initialize and allocate a new stx.
-int stxalloc(stx *sp, size_t n);
-
-// Free all memory used by a stx. Memory must be reinitalized afterwards.
-void stxfree(const stx *sp);
-
-// Grow a stx by n bytes.
-int stxgrow(stx *sp, size_t n);
-// Grow a stx to n bytes if it isn't n size already. Otherwise do nothing.
-int stxensuresize(stx *sp, size_t n);
-// Validate a stx in the case where some of it's internal data might have been
-// changed incorrectly.
-bool stxvalid(stx *sp);
-
-// Get the amount of unused space left in a stx.
-size_t stxavail(stx *sp);
-
-// Compare two slices for equality, stx's can be compared by turning them into
-// references first.
-bool stxcmp(spx s1, spx s2);
-
-void stxswap(stx *s1, stx *s2);
-stx *stxtrunc(stx *sp, size_t n);
-stx *stxterm(stx *sp);
-
-static inline stx *
-stxres(stx *sp)
+bool stx_eq(Str const *a, Str const *b);
+bool stx_cat(String *dst, Str const *src);
+void stx_trunc(Str *a, size_t n);
+size_t stx_avail(String *a);
+static inline bool
+stx_valid(String *a)
+{
+//TODO
+}
+static inline void
+stx_clear(Str *a);
 {
 	sp->len = 0;
 	return sp;
 }
-
-// Create a spx reference from a stx.
-spx stxref(const stx *sp);
-
-// Allocte a stx and copy the context of "src" into it.
-int stxdup_mem(stx *sp, const void *src, size_t n);
-int stxdup_str(stx *sp, const char *src);
-int stxdup_spx(stx *sp, const spx src);
-
 // Copy bytes from "src" into a stx.
-stx *stxcpy_mem(stx *sp, const void *src, size_t n);
-stx *stxcpy_str(stx *sp, const char *src);
-stx *stxcpy_spx(stx *sp, const spx src);
+String *stxcpy(String *dst, Str const *src);
+String *stxcpy_mem(String *sp, void const *src, size_t n);
+String *stxcpy_cstr(stx *sp, char const *src);
 
 // Insert bytes into the middle of stx without overwriting any data.
-stx *stxins_mem(stx *sp, size_t pos, const void *src, size_t n);
-stx *stxins_str(stx *sp, size_t pos, const char *src);
-stx *stxins_utf8f32(stx *sp, size_t pos, uint32_t wc);
-stx *stxins_spx(stx *sp, size_t pos, const spx src);
+String *stxins(String *dst, size_t pos, Str const *src);
+String *stxins_mem(stx *sp, size_t pos, const void *src, size_t n);
+String *stxins_cstr(stx *sp, size_t pos, const char *src);
+String *stxins_utf8f32(stx *sp, size_t pos, uint32_t wc);
 
 // Append bytes to a stx.
-stx *stxapp_char(stx *sp, const char src);
-stx *stxapp_mem(stx *sp, const void *src, size_t n);
-stx *stxapp_str(stx *sp, const char *src);
-stx *stxapp_utf8f32(stx *sp, uint32_t wc);
-stx *stxapp_spx(stx *sp, const spx src);
+String *stxapp(String *dst, Str const *src);
+String *stxapp_byte(stx *sp, const uint8_t src);
+String *stxapp_mem(stx *sp, const void *src, size_t n);
+String *stxapp_cstr(stx *sp, const char *src);
+String *stxapp_utf8f32(stx *sp, uint32_t wc);
 
+//TODO(todd): Revise prototypes below
 // Find a substring inside a stx and return it as a spx referring to it.
 spx stxfind_mem(const spx haystack, const void *needle, size_t n);
 spx stxfind_str(const spx haystack, const char *needle);
