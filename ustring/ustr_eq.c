@@ -12,7 +12,7 @@ ustr_eq(Ustr const *s1, Ustr const *s2)
 	/* Compare chunks of register size for speed */
 	const size_t chunks = s1->len / sizeof(i);
 	for (i = 0; i < chunks; ++i) {
-		if (*(size_t *)s1->mem + i != *(size_t *)s2->mem + i)
+		if (*((size_t *)s1->mem + i) != *((size_t *)s2->mem + i))
 			return false;
 	}
 	/* Compare the leftover bytes */
