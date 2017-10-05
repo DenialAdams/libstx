@@ -72,7 +72,13 @@ TEST_DEFINE(stxcmp_diff_bytes)
 		.mem = rb1,
 	};
 
-	TEST_ASSERT(true == stxcmp(stxr(s1), stxr(s1)));
+	stx s2 = {
+		.len = strlen(rb2),
+		.size = sizeof(rb2),
+		.mem = rb2,
+	};
+
+	TEST_ASSERT(false == stxcmp(stxr(s1), stxr(s2)));
 
 	TEST_END;
 }
