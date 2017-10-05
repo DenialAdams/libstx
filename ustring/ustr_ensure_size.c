@@ -8,14 +8,12 @@ ustr_ensure_size(Ustring *sp, size_t n)
 
 	if (sp->size >= n)
 		return 0;
-	if (!sp->mem && !n) {
-		memset(sp, 0, sizeof(*sp));
-	} else {
-		tmp = realloc(sp->mem, n);
-		if (!tmp)
-			return -1;
-		sp->mem = tmp;
-		sp->size = n;
-	}
+
+	tmp = realloc(sp->mem, n);
+	if (!tmp)
+		return -1;
+	sp->mem = tmp;
+	sp->size = n;
+
 	return 0;
 }
