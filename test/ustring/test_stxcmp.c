@@ -53,6 +53,17 @@ TEST_DEFINE(stxcmp_same_str)
 	TEST_END;
 }
 
+TEST_DEFINE(stxcmp_mostly_same_str)
+{
+	stx str1, str2;
+	stxdup_str(&str1, "hellosame_bob_backtothesame");
+	stxdup_str(&str2, "hellosame_jim_backtothesame");
+
+	TEST_ASSERT(false == stxcmp(stxr(str1), stxr(str2)));
+
+	TEST_END;
+}
+
 TEST_DEFINE(stxcmp_diff_bytes)
 {
 	stx s1 = {
@@ -132,5 +143,6 @@ main(void)
 	TEST_RUN(ts, stxcmp_diff_bytes);
 	TEST_RUN(ts, stxcmp_same_bytes);
 	TEST_RUN(ts, stxcmp_aligned_bytes);
+	TEST_RUN(ts, stxcmp_mostly_same_str);
 	TEST_PRINT(ts);
 }
