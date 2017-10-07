@@ -2,7 +2,7 @@
 #include "internal.h"
 
 void
-stxfree(const stx *s1)
+ustr_free(Ustring const *sp)
 {
-	free(s1->mem);
+	free(sp->mem);
 }

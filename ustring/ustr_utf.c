@@ -9,15 +9,14 @@ enum {
 	UTF8_HC = 0x02 << 6, // Continuation byte header 10xxxxxx.
 };
 
-#include <stdio.h>
-
 size_t
-stxutf8len(const spx sp)
+ustr_utf8len(Ustr const *sp)
 {
 	size_t n = 0;
 	size_t i = 0;
-	while (i < sp.len) {
-		unsigned char ch = sp.mem[i];
+
+	while (i < sp->len) {
+		unsigned char ch = sp->mem[i];
 		if (0x0 == (ch >> 7)) {
 			i += 1;
 		} else if (0x06 == (ch >> 5)) {
@@ -32,12 +31,11 @@ stxutf8len(const spx sp)
 		}
 		++n;
 	}
-
 	return n;
 }
 
 size_t
-stxutf8n32(uint32_t wc)
+ustr_utf8n32(uint32_t wc)
 {
 	size_t len;
 	if (wc < 0x000080) {
@@ -52,14 +50,13 @@ stxutf8n32(uint32_t wc)
 		// Error, invalid encoding.
 		len = 0;
 	}
-
 	return len;
 }
 
 size_t
-stxutf8f32(void *dest, uint32_t wc)
+ustr_utf8f32(void *dest, uint32_t wc)
 {
-	size_t n = stxutf8n32(wc);
+	size_t n = ustr_utf8n32(wc);
 	uint8_t header;
 	switch (n) {
 	case 1:
@@ -79,13 +76,10 @@ stxutf8f32(void *dest, uint32_t wc)
 		return n;
 		break;
 	}
-
 	for (int i = n-1; i > 0; --i) {
 		((uint8_t *)dest)[i] = (UTF8_HC | (wc & 0x3F));
 		wc >>= 6;
 	}
-
 	((uint8_t *)dest)[0] = (header | wc);
-
 	return n;
 }

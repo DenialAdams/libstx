@@ -1,6 +1,3 @@
-#ifndef test_H
-#define test_H
-
 #define TEST_NAME_MAX_LEN 59
 
 struct test_stat {
@@ -92,5 +89,3 @@ test_rand(size_t start, size_t end)
 		} \
 		return (handle).failed; \
 	} while (0)
-
-#endif

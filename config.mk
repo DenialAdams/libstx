@@ -1,14 +1,15 @@
-VERSION = 1.2.0
+VERSION := 1.0.0
 
 # System paths
-PREFIX = /usr/local
-MANPREFIX = ${PREFIX}/man
-LIBPREFIX = ${PREFIX}/lib
-INCLUDEPREFIX = ${PREFIX}/include
+PREFIX := /usr/local
+BINPREFIX := $(PREFIX)/bin
+INCLUDEPREFIX := $(PREFIX)/include
+LIBPREFIX := $(PREFIX)/lib
+MANPREFIX := $(PREFIX)/man
 
 # Linking flags
-LDFLAGS =
+LDFLAGS := -s
 
 # C Compiler settings
-CC = cc
-CFLAGS = -g -std=c11 -pedantic -O2 -Wall -Wextra
+CC := cc 
+CFLAGS := -std=c99 -pedantic -O2 -Wall -Wextra

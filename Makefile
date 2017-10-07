@@ -1,134 +1,67 @@
-# see license file for copyright and license details.
-
+# See LICENSE file for copyright and license details.
+# Project configuration
 include config.mk
 
-#CFLAGS := -I .
+LDFLAGS += -Iinclude
 
-SRC_DIR = src
-DOC_DIR = doc
-TEST_DIR = test
+MODULES := ustring math io
+LIBS :=
+SRC := \
+	include/ustring.h \
+	include/ustring/math.h \
+	include/ustring/io.h
 
-FUN =\
-	stxalloc\
-	stxapp\
-	stxavail\
-	stxcmp\
-	stxcpy\
-	stxdup\
-	stxensuresize\
-	stxfind\
-	stxfree\
-	stxgrow\
-	stxins\
-	stxref\
-	stxslice\
-	stxstrip\
-	stxswap\
-	stxterm\
-	stxtok\
-	stxtrunc\
-	stxutf\
-	stxvalid\
+# Include project modules
+include $(patsubst %, %/module.mk, $(MODULES))
 
-MAN3 = $(addprefix ${DOC_DIR}/, ${FUN:=.3})
-MAN7 = $(addprefix ${DOC_DIR}/, ${TARGET:.a=.7})
-MANPDF = ${MAN3:.3=.pdf}
-MANPDF += ${MAN7:.7=.pdf}
-MANHTML = ${MAN3:.3=.html}
-MANHTML += ${MAN7:.7=.html}
+_OBJ := $(patsubst %.c, %.o, $(filter %.c, $(SRC)))
+OBJ := $(patsubst %, build/%, $(_OBJ))
+OBJ_DEBUG := $(patsubst %.o, build/%_d.o, $(_OBJ))
 
-SRC = $(addprefix ${SRC_DIR}/, ${FUN:=.c})
-OBJ = $(addprefix ${SRC_DIR}/, ${FUN:=.o})
-
-TEST_SRC = $(addprefix ${TEST_DIR}/test_, ${FUN:=.c})
-TEST = $(addprefix ${TEST_DIR}/test_, ${FUN:=.test})
-
-TARGET = libstx.a
-
-DIST = $(basename ${TARGET})-${VERSION}
-DIST_FILES = ${TEST_DIR} ${SRC_DIR} ${MAN_DIR} libstx.h Makefile README config.mk
-
-# Core make targets
-
-all: ${TARGET}
+# Standard targets
+all: options release
 
 options: config.mk
-	@printf "${TARGET} build options:\n"
-	@printf "CFLAGS  = ${CFLAGS}\n"
-	@printf "LDFLAGS = ${LDFLAGS}\n"
-	@printf "CC      = ${CC}\n"
-
-%.o: %.c config.mk
-	@printf "CC $<\n"
-	@${CC} ${CFLAGS} -c -o $@ $<
-
-%.test: %.c ${TARGET} config.mk
-	@printf "CC $<\n"
-	@${CC} ${CFLAGS} -o $@ $< ${TARGET} ${LDFLAGS}
-
-${OBJ}: libstx.h ${SRC_DIR}/internal.h
-
-${TARGET}: ${OBJ}
-	@printf "Creating library archive ... "
-	@ar -cq $@ ${OBJ}
-	@printf "done.\n"
-
-${TEST}: libstx.h ${TEST_DIR}/test.h
-
-test: ${TEST}
-
-check: test
-	./test/run_all.sh
-
-clean:
-	@printf "Cleaning ... "
-	@rm -f ${OBJ} ${TARGET} ${TEST} ${DIST}.tar.gz ${MANPDF} ${MANHTML}
-	@printf "done.\n"
+	@printf -- "ustring build options:\n"
+	@printf -- "CFLAGS  = %s\n" "$(CFLAGS)"
+	@printf -- "LDFLAGS = %s\n" "$(LDFLAGS)"
+	@printf -- "CC      = %s\n" "$(CC)"
 
 dist: clean
-	@printf "Creating dist tarball ... "
-	@mkdir -p ${DIST}
-	@cp -R ${DIST_FILES} ${DIST}
-	@tar -cf ${DIST}.tar ${DIST}
-	@gzip ${DIST}.tar
-	@rm -rf ${DIST}
+
+clean:
+	@printf "Cleaning\n"
+	@rm -rf build
+
+# Release build
+build/%.o: %.c
+	@printf "CC [R] $@\n"
+	@mkdir -p $(shell dirname $@)
+	@$(CC) $(CFLAGS) $(LDFLAGS) -c -o $@ $<
+
+# Debug build
+build/%_d.o: %.c
+	@printf "CC [D] $@\n"
+	@mkdir -p $(shell dirname $@)
+	@$(CC) -g $(CFLAGS) $(LDFLAGS) -c -o $@ $<
+
+# Release target
+build/ustring.a: $(OBJ)
+	@printf "Creating library archive for release... "
+	@ar -cq $@ $?
 	@printf "done.\n"
 
-install: all
-	@printf "Installing library archive to ${DESTDIR}${LIBPREFIX}.\n"
-	@mkdir -p ${DESTDIR}${LIBPREFIX}
-	@cp -f ${TARGET} ${DESTDIR}${LIBPREFIX}
-	@printf "Installing library header to ${DESTDIR}${INCLUDEPREFIX}.\n"
-	@mkdir -p ${DESTDIR}${INCLUDEPREFIX}
-	@cp -f libstx.h ${DESTDIR}${INCLUDEPREFIX}
-	@printf "Installing man pages to ${DESTDIR}${MANPREFIX}.\n"
-	@mkdir -p ${DESTDIR}${MANPREFIX}/man7
-	@cp -f ${MAN7} ${DESTDIR}${MANPREFIX}/man7  
-	@mkdir -p ${DESTDIR}${MANPREFIX}/man3
-	@cp -f ${MAN3} ${DESTDIR}${MANPREFIX}/man3
+# Debug target
+build/ustring_d.a: $(OBJ_DEBUG)
+	@printf "Creating library archive for debugging... "
+	@ar -cq $@ $?
+	@printf "done.\n"
 
-uninstall:
-	@printf "Removing library archive from ${DESTDIR}${LIBPREFIX}.\n"
-	@rm -f ${DESTDIR}${LIBPREFIX}/${TARGET}
-	@printf "Removing library header from ${DESTDIR}${INCLUDEPREFIX}.\n"
-	@rm -f ${DESTDIR}${PREFIX}/include/libstx.h
+release: build/ustring.a
 
-# Documentation generation for different formats
+debug: build/ustring_d.a
 
-%.pdf: %.3
-	man -t $< | ps2pdf - $@
-
-%.pdf: %.7
-	man -t $< | ps2pdf - $@
-
-%.html: %.3
-	cat $< | groff -mandoc -Thtml > $@
-
-%.html: %.7
-	cat $< | groff -mandoc -Thtml > $@
-
-pdf: ${MANPDF}
-
-html: ${MANHTML}
+# Build tests
+test:
 
 .PHONY: all options check clean dist install uninstall
