@@ -1,11 +1,21 @@
-# Compiled objects
-*.o
-*.a
-*.so
-*.test
-*.pdf
-*.html
+# Ignore everything
+*
 
-# Packages
-*.tar
-*.gz
+# Whitelist subdirectories
+!*/
+
+# Whitelist the following extensions
+!*.c
+!*.h
+!*.tex
+!*.txt
+!*.sh
+!*.mk
+!*.3
+!*.7
+
+# Whitelist specific filenames
+!*.gitignore
+!*README
+!*LICENSE
+!*Makefile

@@ -2,18 +2,19 @@
 #include "internal.h"
 
 int
-stxgrow(stx *sp, size_t n)
+ustr_grow(Ustring *sp, size_t n)
 {
+	uint8_t *tmp;
+
 	if (internal_size_add_overflows(sp->size, n)) {
 		n = SIZE_MAX;
 	} else {
 		n = sp->size + n;
 	}
-
 	if (!sp->mem && !n) {
 		memset(sp, 0, sizeof(*sp));
 	} else {
-		char *tmp = realloc(sp->mem, n);
+		tmp = realloc(sp->mem, n);
 
 		if (!tmp)
 			return -1;
@@ -21,6 +22,5 @@ stxgrow(stx *sp, size_t n)
 		sp->mem = tmp;
 		sp->size = n;
 	}
-
 	return 0;
 }

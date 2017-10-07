@@ -1,14 +1,13 @@
 // See LICENSE file for copyright and license details
 #include "internal.h"
 
-stx *
-stxtrunc(stx *sp, size_t len)
+Ustr *
+ustr_trunc(Ustr *sp, size_t n)
 {
-	if (len >= sp->len) {
+	if (n >= sp->len) {
 		sp->len = 0;
-		return sp;
+	} else {
+		sp->len -= n;
 	}
-
-	sp->len -= len;
 	return sp;
 }
